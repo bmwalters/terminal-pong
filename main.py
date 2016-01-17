@@ -2,6 +2,7 @@ import random, curses, time
 
 from ball import Ball
 from paddle import Paddle
+from label import Label
 
 TICKRATE = 20
 
@@ -18,6 +19,10 @@ class Game():
 		self.paddle1 = Paddle(0, 0, 5, [curses.KEY_LEFT, curses.KEY_RIGHT])
 		self.paddle2 = Paddle(0, SCRH - 1, 5, [97, 100])
 
+		self.scorex = 0
+		self.scorey = 0
+		self.score = Label(1, 1, "Score: 0:0")
+
 	def loop(self):
 		while True:
 			key = self.window.getch()
@@ -27,7 +32,7 @@ class Game():
 			self.paddle2.update(self.window, key)
 
 			self.window.clear()
-			draworder = sorted([self.ball, self.paddle1, self.paddle2], key=lambda o: o.x)
+			draworder = sorted([self.ball, self.paddle1, self.paddle2, self.score], key=lambda o: o.x)
 			for o in draworder:
 				o.draw(self.window)
 			self.window.refresh()

@@ -47,7 +47,7 @@ class Ball(Movable):
 			blip()
 
 		for obstacle in obstacles:
-			if (self.x >= obstacle.x and self.x <= (obstacle.x + obstacle.w + 1)) and self.y == (obstacle.y - 1):
+			if (self.x >= obstacle.x and self.x <= (obstacle.x + obstacle.w + 1)) and ((self.vely == 1 and self.y == (obstacle.y - 1)) or (self.vely == -1 and self.y == (obstacle.y + 1))):
 				self.vely *= -1
 				blip()
 
