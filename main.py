@@ -14,29 +14,26 @@ class Game():
 
 		SCRH, SCRW = self.window.getmaxyx()
 
-		self.ball = Ball(0, 0)
-		self.paddle = Paddle(0, SCRH - 1, 5)
-
-		self.lasttick = time.time()
+		self.ball = Ball(2, 2)
+		self.paddle = Paddle(0, SCRH - 1, 5, [curses.KEY_LEFT, curses.KEY_RIGHT])
 
 	def loop(self):
 		while True:
-			if time.time() > (self.lasttick + 1.0/TICKRATE):
-				self.ball.update(self.window, self.paddle)
-				self.paddle.update(self.window)
+			self.ball.update(self.window, [self.paddle,])
+			self.paddle.update(self.window)
 
-				self.window.clear()
-				if self.paddle.x < self.ball.x:
-					self.paddle.draw(self.window)
-					self.ball.draw(self.window)
-				else:
-					self.ball.draw(self.window)
-					self.paddle.draw(self.window)
-				self.window.refresh()
+			self.window.clear()
+			if self.paddle.x < self.ball.x:
+				self.paddle.draw(self.window)
+				self.ball.draw(self.window)
+			else:
+				self.ball.draw(self.window)
+				self.paddle.draw(self.window)
+			self.window.refresh()
 
-				curses.flushinp()
+			curses.flushinp()
 
-				self.lasttick = time.time()
+			curses.napms(1000 / TICKRATE)
 
 g = Game()
 g.loop()
