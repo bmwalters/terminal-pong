@@ -15,20 +15,21 @@ class Game():
 		SCRH, SCRW = self.window.getmaxyx()
 
 		self.ball = Ball(2, 2)
-		self.paddle = Paddle(0, SCRH - 1, 5, [curses.KEY_LEFT, curses.KEY_RIGHT])
+		self.paddle1 = Paddle(0, 0, 5, [curses.KEY_LEFT, curses.KEY_RIGHT])
+		self.paddle2 = Paddle(0, SCRH - 1, 5, [97, 100])
 
 	def loop(self):
 		while True:
-			self.ball.update(self.window, [self.paddle,])
-			self.paddle.update(self.window)
+			key = self.window.getch()
+
+			self.ball.update(self.window, [self.paddle1, self.paddle2])
+			self.paddle1.update(self.window, key)
+			self.paddle2.update(self.window, key)
 
 			self.window.clear()
-			if self.paddle.x < self.ball.x:
-				self.paddle.draw(self.window)
-				self.ball.draw(self.window)
-			else:
-				self.ball.draw(self.window)
-				self.paddle.draw(self.window)
+			draworder = sorted([self.ball, self.paddle1, self.paddle2], key=lambda o: o.x)
+			for o in draworder:
+				o.draw(self.window)
 			self.window.refresh()
 
 			curses.flushinp()

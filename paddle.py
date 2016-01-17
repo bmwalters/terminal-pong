@@ -9,12 +9,10 @@ class Paddle(Movable):
 		self.k_l = keys[0]
 		self.k_r = keys[1]
 
-	def update(self, window):
+	def update(self, window, key):
 		super(Paddle, self).update()
 
 		scrh, scrw = window.getmaxyx()
-
-		key = window.getch()
 
 		if key == self.k_l:
 			self.x = max(self.x - 1, 0)
