@@ -1,8 +1,6 @@
-import wave, threading
-
 useaudio = True
 try:
-	import pyaudio
+	import pyaudio, wave, threading
 except ImportError:
 	useaudio = False
 
