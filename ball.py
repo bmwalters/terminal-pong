@@ -1,6 +1,10 @@
 import wave, threading
 
-import pyaudio
+useaudio = True
+try:
+	import pyaudio
+except ImportError:
+	useaudio = False
 
 from movable import Movable
 
@@ -27,8 +31,9 @@ def play_blip():
 	p.terminate()
 
 def blip():
-	t = threading.Thread(target=play_blip)
-	t.start()
+	if useaudio:
+		t = threading.Thread(target=play_blip)
+		t.start()
 
 class Ball(Movable):
 	def __init__(self, x, y, velx=1, vely=1):
